@@ -1,0 +1,76 @@
+nav-bar {
+  display: block;
+}
+
+search-bar {
+  display: block;
+}
+
+option-list {
+  display: block;
+}
+
+case-list {
+  display: block;
+}
+
+.root-container {
+  @apply container mx-auto min-h-screen py-5 px-2;
+  max-width: 845px;
+}
+
+search-bar input {
+  @apply my-5 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:border-black hover:border-black transition-all duration-500 ease-in-out;
+}
+
+option-list {
+  @apply mb-5;
+}
+
+option-item button {
+  @apply bg-gray-400 py-1 px-2 m-1 rounded rounded-full border-2 border-gray-900 border-opacity-0 hover:border-opacity-100 active:bg-gray-900 active:text-white transition-transform transform hover:scale-110;
+}
+
+.active {
+  @apply bg-gray-900 text-white;
+}
+
+case-list {
+  @apply grid grid-cols-2 gap-4 md:grid-cols-4;
+}
+
+case-item {
+  @apply block p-2 border-2 border-gray-200 hover:border-black rounded shadow-md hover:shadow-lg cursor-pointer transition-all transform hover:-translate-y-2;
+}
+
+.country-badge {
+  @apply bg-gray-300 p-1 text-xs rounded;
+}
+
+.date {
+  @apply text-xs my-1;
+}
+
+.province {
+  @apply text-2xl font-bold;
+}
+
+.card-label {
+  @apply text-sm;
+}
+
+.card-value {
+  @apply text-lg font-semibold;
+}
+
+.blue {
+  @apply text-blue-700;
+}
+
+.green {
+  @apply text-green-700;
+}
+
+.red {
+  @apply text-red-700;
+}
