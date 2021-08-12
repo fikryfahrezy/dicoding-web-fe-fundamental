@@ -10,6 +10,12 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
 
+    steps:
+      - name: Hello World
+        run: echo Hello world $FIRST_NAME $middle_name $Last_Name!
+        env:
+          COVID_API: ${{ secrets.COVID_API }}
+
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
           npm install
@@ -18,8 +24,6 @@ jobs:
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
-        env:
-          COVID_API: ${{ secrets.COVID_API }}
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: dist # The folder the action should deploy.
