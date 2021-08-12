@@ -33,7 +33,7 @@ class CaseItem extends HTMLElement {
 
     div.appendChild(province);
     province.classList.add('province');
-    province.textContent = provinceState || 'Unknown';
+    province.textContent = provinceState;
 
     const confirmedLabel = document.createElement('p');
 

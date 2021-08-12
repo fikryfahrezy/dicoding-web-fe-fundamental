@@ -38,48 +38,92 @@ const app = () => {
   const optionList = document.querySelector('option-list');
   const caseList = document.querySelector('case-list');
 
-  const initData = () => {
-    Promise.all([
-      getCovidApi()
-        .then((res) => {
-          optionList.options = res;
-        })
-        .catch((err) => {
-          console.log(err);
-        }),
-      getDaily(getDate())
-        .then((res) => {
-          caseList.cases = res;
-        })
-        .catch((err) => {
-          console.log(err);
-        }),
-    ]);
+  /**
+   * @param {string} keyword
+   * @returns {void}
+   */
+  const searchBounce = async (keyword) => {
+    try {
+      let data = [];
+
+      if (keyword === '') {
+        data = await getDaily(getDate());
+      } else {
+        data = await getCountryDetail(keyword);
+      }
+
+      caseList.cases = data;
+    } catch (err) {
+      caseList.renderError(err.message);
+    }
   };
 
-  const searchBounce = (keyword) => {
-    if (keyword !== '')
-      getCountryDetail(keyword)
-        .then((res) => {
-          caseList.cases(res);
-        })
-        .catch((err) => {
-          console.log(err);
+  const getData = async (key) => {
+    try {
+      let data = [];
+
+      caseList.setLoading();
+
+      switch (key) {
+        case 'confirmed':
+          data = await getConfirmed();
+          break;
+        case 'recovered':
+          data = await getRecovered();
+          break;
+        case 'deaths':
+          data = await getDeaths();
+          break;
+        default:
+          data = await getDaily(getDate());
+      }
+
+      caseList.cases = data;
+    } catch (err) {
+      caseList.renderError(err.message);
+    }
+  };
+
+  /**
+   * @param {{value: string}[]} data
+   * @returns {void}
+   */
+  const initOptions = (data) => {
+    optionList.options = data;
+
+    const buttons = document.querySelectorAll('.button');
+
+    buttons.forEach((button, i) => {
+      if (i === 0) button.classList.add('active');
+
+      button.addEventListener('click', (currBtnE) => {
+        document.querySelectorAll('.button').forEach((btn) => {
+          btn.classList.remove('active');
         });
+
+        currBtnE.target.classList.add('active');
+
+        getData(currBtnE.target.id);
+      });
+    });
   };
 
-  // TODO: Not working yet
-  const buttons = document.querySelectorAll('.button');
-
-  buttons.forEach((button) => {
-    button.addEventListener('click', (currBtnE) => {
-      document.querySelectorAll('.button').forEach((btn) => {
-        btn.classList.remove('active');
+  /**
+   * @returns {void}
+   */
+  const initData = () => {
+    getDaily(getDate())
+      .then((res) => {
+        caseList.cases = res;
+      })
+      .catch((err) => {
+        caseList.renderError(err.message);
       });
 
-      currBtnE.target.classList.add('active');
-    });
-  });
+    const data = getCovidApi();
+
+    initOptions(data);
+  };
 
   searchInput.addEventListener('keydown', debounce(searchBounce));
 

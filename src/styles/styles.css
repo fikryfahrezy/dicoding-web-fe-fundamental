@@ -55,6 +55,10 @@ case-item {
   @apply text-2xl font-bold;
 }
 
+.ungrid {
+  @apply grid-cols-1;
+}
+
 .card-label {
   @apply text-sm;
 }

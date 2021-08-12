@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "format": "prettier-eslint \"src\"",
+    "format": "prettier-eslint \"src/**/*.js\"",
     "dev": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js && npm run postcss",
+    "prettier": "prettier -w .",
     "tailwind": "tailwind -o src/styles/tailwind.css",
-    "postcss": "NODE_ENV=production postcss src/styles/build.css -o dist/styles.css"
+    "postcss": "NODE_ENV=production postcss src/styles/build.css -o dist/styles.css",
+    "serve": "http-server ./dist"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +27,7 @@
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
     "html-webpack-tags-plugin": "^3.0.1",
+    "http-server": "^13.0.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "postcss": "^8.3.6",

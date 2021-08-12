@@ -13,23 +13,21 @@ import ky from 'ky';
 const COVID_API_URL = process.env.COVID_API;
 
 /**
- * @returns {Promise<{value: string, link: string}[]>}
+ * @returns {{value: string}[]>}
  */
-export const getCovidApi = async () => {
-  const data = await ky.get(`${COVID_API_URL}`).json();
-  const { confirmed, recovered, deaths } = data;
+export const getCovidApi = () => {
   const result = [
     {
+      value: 'Today',
+    },
+    {
       value: 'Confirmed',
-      link: confirmed.detail,
     },
     {
       value: 'Recovered',
-      link: recovered.detail,
     },
     {
       value: 'Deaths',
-      link: deaths.detail,
     },
   ];
 
@@ -45,9 +43,9 @@ export const getDaily = async (date) => {
 
   const result = data.map(
     ({ provinceState, countryRegion, lastUpdate, confirmed, deaths, recovered }) => ({
-      provinceState,
       countryRegion,
       lastUpdate,
+      provinceState: provinceState ?? 'Unknown',
       confirmed: Number(confirmed),
       deaths: Number(deaths),
       recovered: Number(recovered),
@@ -65,10 +63,10 @@ export const getConfirmed = async () => {
 
   const result = data.map(
     ({ provinceState, countryRegion, lastUpdate, confirmed, deaths, recovered }) => ({
-      provinceState,
       countryRegion,
       confirmed,
       deaths,
+      provinceState: provinceState ?? 'Unknown',
       recovered: recovered ?? 0,
       lastUpdate: new Date(lastUpdate),
     }),
@@ -94,10 +92,10 @@ export const getDeaths = async () => {
 
   const result = data.map(
     ({ provinceState, countryRegion, lastUpdate, confirmed, deaths, recovered }) => ({
-      provinceState,
       countryRegion,
       confirmed,
       deaths,
+      provinceState: provinceState ?? 'Unknown',
       recovered: recovered ?? 0,
       lastUpdate: new Date(lastUpdate),
     }),

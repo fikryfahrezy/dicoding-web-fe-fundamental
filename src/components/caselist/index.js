@@ -6,8 +6,43 @@ class CaseList extends HTMLElement {
     this.render();
   }
 
+  setLoading() {
+    this.innerHTML = '';
+
+    const h2 = document.createElement('h2');
+
+    h2.textContent = 'Loading';
+
+    this.classList.add('ungrid');
+    this.appendChild(h2);
+  }
+
+  renderError(message) {
+    this.innerHTML = '';
+
+    const h2 = document.createElement('h2');
+
+    h2.textContent = message;
+
+    this.classList.add('ungrid');
+    this.appendChild(h2);
+  }
+
   render() {
     this.innerHTML = '';
+
+    if (this.caseList.length === 0) {
+      const h2 = document.createElement('h2');
+
+      h2.textContent = 'No data available';
+
+      this.classList.add('ungrid');
+      this.appendChild(h2);
+
+      return;
+    }
+
+    this.classList.remove('ungrid');
     this.caseList.forEach((caseItem) => {
       const caseEl = document.createElement('case-item');
 

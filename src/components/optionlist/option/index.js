@@ -5,10 +5,10 @@ class OptionItem extends HTMLElement {
   }
 
   render() {
-    const { value, link } = this.optionItem;
+    const { value } = this.optionItem;
     const button = document.createElement('button');
 
-    button.setAttribute('id', 'test');
+    button.setAttribute('id', value.toLowerCase());
     button.classList.add('button');
     button.textContent = value;
 
