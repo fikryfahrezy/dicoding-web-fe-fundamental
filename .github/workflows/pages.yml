@@ -6,20 +6,25 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      TEST: ENV_VALUE
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
 
+      - name: PoW
+        if: ${{ env.TEST == 'ENV_VALUE' }}
+        run: echo "Hello $FIRST_NAME $middle_name $Last_Name, today is Monday!"
+        env:
+          FIRST_NAME: ${{ secrets.COVID_API }}
+          middle_name: The
+          Last_Name: Octocat
+
       - name: Create env File
         shell: bash
         env:
-          COVID_API: ${{ env.ENV_VALUE }}
-          COVID_APIx: ${{ env.ENV_VALUE.COVID_API }}
-          COVID_AP: ${{ secrets.COVID_AP }}
+          COVID_API: ${{ secrets.COVID_AP }}
         run: |
-          echo "$COVID_API"
-          echo "$COVID_APIx"
-          echo "$COVID_AP"
           touch .env
           echo COVID_API="$COVID_API" >> .env
           cat .env
