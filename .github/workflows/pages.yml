@@ -13,10 +13,12 @@ jobs:
       - name: Create env File
         shell: bash
         env:
-          COVID_API: ${{ secrets.COVID_API }}
+          COVID_API: ${{ env.ENV_VALUE }}
+          COVID_APIx: ${{ env.ENV_VALUE.COVID_API }}
           COVID_AP: ${{ secrets.COVID_AP }}
         run: |
           echo "$COVID_API"
+          echo "$COVID_APIx"
           echo "$COVID_AP"
           touch .env
           echo COVID_API="$COVID_API" >> .env
